@@ -1,0 +1,10 @@
+transaction_id,customer_id,amount,transaction_type,is_fraud
+5013,1049,179926,POS,1
+5027,1037,90772,Transfer,1
+5036,1006,86916,Transfer,1
+5040,1017,172390,Transfer,1
+5045,1006,116881,Online,1
+5046,1022,47833,Online,1
+5073,1028,178774,Transfer,1
+5076,1023,34328,POS,1
+5098,1016,183457,ATM,1
