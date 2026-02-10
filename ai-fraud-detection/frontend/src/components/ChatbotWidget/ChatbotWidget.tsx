@@ -82,7 +82,7 @@ const ChatbotWidget: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api/bot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,10 +1,12 @@
+{
   "rewrites": [
     {
-      "source": "/api/chat",
-      "destination": "/api/chat"
+      "source": "/api/bot",
+      "destination": "/api/bot"
     },
     {
-      "source": "/api/(.*)",
+      "source": "/api/((?!bot).*)",
       "destination": "/api"
     }
   ]
+}
