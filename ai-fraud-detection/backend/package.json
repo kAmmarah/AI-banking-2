@@ -26,7 +26,8 @@
     "helmet": "^8.1.0",
     "pg": "^8.18.0",
     "sequelize": "^6.37.7",
-    "websocket": "^1.0.35"
+    "websocket": "^1.0.35",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

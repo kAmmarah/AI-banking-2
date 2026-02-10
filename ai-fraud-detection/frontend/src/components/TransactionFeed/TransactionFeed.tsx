@@ -11,6 +11,15 @@ import {
   Box,
   Typography
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.05)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '10px',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+}));
 
 interface Transaction {
   id: string;
@@ -97,49 +106,71 @@ export const TransactionFeed: React.FC = () => {
   
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography 
+        variant="h6" 
+        gutterBottom
+        sx={{ 
+          color: '#40e0ff',
+          fontWeight: 'bold',
+          mb: 2
+        }}
+      >
         Live Transaction Feed
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={StyledPaper}>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Merchant</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell align="right">Amount</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Risk Score</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>ID</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>Merchant</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>Location</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }} align="right">Amount</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>Status</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>Risk Score</TableCell>
+              <TableCell sx={{ color: '#40e0ff', fontWeight: 'bold' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {transactions.map((transaction) => (
-              <TableRow key={transaction.id}>
-                <TableCell>{transaction.id}</TableCell>
-                <TableCell>{transaction.merchant}</TableCell>
-                <TableCell>{transaction.location}</TableCell>
-                <TableCell align="right">${transaction.amount.toFixed(2)}</TableCell>
+              <TableRow 
+                key={transaction.id}
+                sx={{ 
+                  '&:hover': { 
+                    backgroundColor: 'rgba(64, 224, 255, 0.1)' 
+                  },
+                  '&:nth-of-type(odd)': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+                  }
+                }}
+              >
+                <TableCell sx={{ color: '#e0e0e0' }}>{transaction.id}</TableCell>
+                <TableCell sx={{ color: '#e0e0e0' }}>{transaction.merchant}</TableCell>
+                <TableCell sx={{ color: '#e0e0e0' }}>{transaction.location}</TableCell>
+                <TableCell sx={{ color: '#e0e0e0' }} align="right">${transaction.amount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Chip 
                     label={transaction.status} 
                     size="small"
-                    color={
-                      transaction.status === 'completed' ? 'success' :
-                      transaction.status === 'pending' ? 'warning' :
-                      'error'
-                    }
+                    sx={{
+                      backgroundColor: 
+                        transaction.status === 'completed' ? '#4ECDC4' :
+                        transaction.status === 'pending' ? '#FFD700' : '#FF6B6B',
+                      color: 'white',
+                      fontWeight: 'bold'
+                    }}
                   />
                 </TableCell>
                 <TableCell>
                   <Chip 
                     label={`${(transaction.riskScore * 100).toFixed(0)}%`} 
                     size="small"
-                    color={
-                      transaction.riskScore > 0.7 ? 'error' :
-                      transaction.riskScore > 0.3 ? 'warning' :
-                      'success'
-                    }
+                    sx={{
+                      backgroundColor: 
+                        transaction.riskScore > 0.7 ? '#FF6B6B' :
+                        transaction.riskScore > 0.3 ? '#FFD700' : '#4ECDC4',
+                      color: transaction.riskScore > 0.3 && transaction.riskScore <= 0.7 ? '#333' : 'white',
+                      fontWeight: 'bold'
+                    }}
                   />
                 </TableCell>
                 <TableCell>
@@ -147,7 +178,12 @@ export const TransactionFeed: React.FC = () => {
                     <Chip 
                       label="FRAUD" 
                       size="small" 
-                      color="error" 
+                      sx={{
+                        backgroundColor: '#FF6B6B',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        border: '1px solid #FF6B6B'
+                      }}
                       variant="outlined" 
                     />
                   )}

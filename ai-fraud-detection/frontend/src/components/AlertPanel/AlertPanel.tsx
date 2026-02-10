@@ -5,7 +5,6 @@ import {
   ListItemText, 
   ListItemIcon, 
   ListItemButton,
-  Paper,
   Typography,
   Box,
   Chip
@@ -62,7 +61,15 @@ export const AlertPanel: React.FC = () => {
   
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography 
+        variant="h6" 
+        gutterBottom
+        sx={{ 
+          color: '#40e0ff',
+          fontWeight: 'bold',
+          mb: 2
+        }}
+      >
         Fraud Alerts
       </Typography>
       <List dense>
@@ -70,42 +77,67 @@ export const AlertPanel: React.FC = () => {
           <ListItem 
             key={alert.id} 
             disablePadding
+            sx={{
+              mb: 1,
+              borderRadius: '8px',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(5px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(64, 224, 255, 0.1)',
+                border: '1px solid rgba(64, 224, 255, 0.3)',
+                transform: 'translateX(5px)'
+              }
+            }}
             secondaryAction={
               <Chip 
                 label={(alert.riskScore * 100).toFixed(0) + '%'} 
                 size="small"
-                color={
-                  alert.riskScore > 0.8 ? 'error' :
-                  alert.riskScore > 0.5 ? 'warning' :
-                  'default'
-                }
+                sx={{
+                  backgroundColor: 
+                    alert.riskScore > 0.8 ? '#FF6B6B' :
+                    alert.riskScore > 0.5 ? '#FFD700' : '#4ECDC4',
+                  color: alert.riskScore > 0.5 && alert.riskScore <= 0.8 ? '#333' : 'white',
+                  fontWeight: 'bold'
+                }}
               />
             }
           >
             <ListItemButton>
               <ListItemIcon>
                 {alert.status === 'resolved' ? (
-                  <CheckCircleIcon color="success" />
+                  <CheckCircleIcon sx={{ color: '#4ECDC4' }} />
                 ) : (
-                  <WarningIcon color="warning" />
+                  <WarningIcon sx={{ color: '#FFD700' }} />
                 )}
               </ListItemIcon>
               <ListItemText
                 primary={`TX: ${alert.transactionId}`}
+                primaryTypographyProps={{
+                  sx: { color: '#e0e0e0', fontWeight: 'bold' }
+                }}
                 secondary={
                   <>
-                    <Typography component="span" variant="body2" color="text.primary">
+                    <Typography 
+                      component="span" 
+                      variant="body2" 
+                      sx={{ color: '#b0b0b0' }}
+                    >
                       {alert.description}
                     </Typography>
                     <br />
                     <Chip 
                       label={alert.status.toUpperCase()} 
                       size="small"
-                      color={
-                        alert.status === 'open' ? 'error' :
-                        alert.status === 'investigating' ? 'warning' :
-                        'success'
-                      }
+                      sx={{
+                        backgroundColor: 
+                          alert.status === 'open' ? '#FF6B6B' :
+                          alert.status === 'investigating' ? '#FFD700' : '#4ECDC4',
+                        color: alert.status === 'investigating' ? '#333' : 'white',
+                        fontWeight: 'bold',
+                        mt: 0.5
+                      }}
                     />
                   </>
                 }

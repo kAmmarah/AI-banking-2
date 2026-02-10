@@ -6,18 +6,39 @@ import {
   Typography, 
   Card, 
   CardContent, 
-  CardHeader 
+  Box
 } from '@mui/material';
+
 import { styled } from '@mui/material/styles';
 import { TransactionFeed } from '../TransactionFeed/TransactionFeed';
 import { AlertPanel } from '../AlertPanel/AlertPanel';
 import { Analytics } from '../Analytics/Analytics';
+import Footer from '../Footer/Footer';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   display: 'flex',
   overflow: 'auto',
   flexDirection: 'column',
+  background: 'rgba(255, 255, 255, 0.05)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '15px',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+}));
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '15px',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 12px 40px rgba(64, 224, 255, 0.2)',
+    border: '1px solid rgba(64, 224, 255, 0.4)',
+  }
 }));
 
 const Dashboard: React.FC = () => {
@@ -40,65 +61,142 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Box sx={{ 
+      flexGrow: 1, 
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+      padding: '20px 0'
+    }}>
+      
+      <Container maxWidth="lg">
       <Grid container spacing={3}>
         {/* Stats Cards */}
         <Grid item xs={12} sm={6} md={3}>
-          <Card>
+          <StyledCard>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography 
+                color="textSecondary" 
+                gutterBottom
+                sx={{ 
+                  color: '#b0b0b0',
+                  fontWeight: 500
+                }}
+              >
                 Total Transactions
               </Typography>
-              <Typography variant="h5" component="h2">
+              <Typography 
+                variant="h5" 
+                component="h2"
+                sx={{ 
+                  color: '#40e0ff',
+                  fontWeight: 'bold',
+                  background: 'linear-gradient(135deg, #40e0ff 0%, #ffffff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
                 {stats.totalTransactions.toLocaleString()}
               </Typography>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Grid>
         
         <Grid item xs={12} sm={6} md={3}>
-          <Card>
+          <StyledCard>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography 
+                color="textSecondary" 
+                gutterBottom
+                sx={{ 
+                  color: '#b0b0b0',
+                  fontWeight: 500
+                }}
+              >
                 Flagged Transactions
               </Typography>
-              <Typography variant="h5" component="h2" color="warning.main">
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ 
+                  color: '#FFD700',
+                  fontWeight: 'bold'
+                }}
+              >
                 {stats.flaggedTransactions}
               </Typography>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Grid>
         
         <Grid item xs={12} sm={6} md={3}>
-          <Card>
+          <StyledCard>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography 
+                color="textSecondary" 
+                gutterBottom
+                sx={{ 
+                  color: '#b0b0b0',
+                  fontWeight: 500
+                }}
+              >
                 Confirmed Fraud
               </Typography>
-              <Typography variant="h5" component="h2" color="error.main">
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ 
+                  color: '#FF6B6B',
+                  fontWeight: 'bold'
+                }}
+              >
                 {stats.confirmedFraud}
               </Typography>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Grid>
         
         <Grid item xs={12} sm={6} md={3}>
-          <Card>
+          <StyledCard>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography 
+                color="textSecondary" 
+                gutterBottom
+                sx={{ 
+                  color: '#b0b0b0',
+                  fontWeight: 500
+                }}
+              >
                 Prevented Losses
               </Typography>
-              <Typography variant="h5" component="h2" color="success.main">
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ 
+                  color: '#4ECDC4',
+                  fontWeight: 'bold'
+                }}
+              >
                 ${stats.preventedLosses.toLocaleString()}
               </Typography>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Grid>
 
         {/* Transaction Feed */}
         <Grid item xs={12} md={8}>
           <StyledPaper>
-            <Typography variant="h6" gutterBottom>
+            <Typography 
+              variant="h6" 
+              gutterBottom
+              sx={{ 
+                color: '#40e0ff',
+                fontWeight: 'bold',
+                mb: 2,
+                borderBottom: '2px solid rgba(64, 224, 255, 0.3)',
+                pb: 1
+              }}
+            >
               Recent Transactions
             </Typography>
             <TransactionFeed />
@@ -108,7 +206,17 @@ const Dashboard: React.FC = () => {
         {/* Alerts Panel */}
         <Grid item xs={12} md={4}>
           <StyledPaper>
-            <Typography variant="h6" gutterBottom>
+            <Typography 
+              variant="h6" 
+              gutterBottom
+              sx={{ 
+                color: '#40e0ff',
+                fontWeight: 'bold',
+                mb: 2,
+                borderBottom: '2px solid rgba(64, 224, 255, 0.3)',
+                pb: 1
+              }}
+            >
               Fraud Alerts
             </Typography>
             <AlertPanel />
@@ -118,7 +226,17 @@ const Dashboard: React.FC = () => {
         {/* Analytics */}
         <Grid item xs={12}>
           <StyledPaper>
-            <Typography variant="h6" gutterBottom>
+            <Typography 
+              variant="h6" 
+              gutterBottom
+              sx={{ 
+                color: '#40e0ff',
+                fontWeight: 'bold',
+                mb: 2,
+                borderBottom: '2px solid rgba(64, 224, 255, 0.3)',
+                pb: 1
+              }}
+            >
               Analytics
             </Typography>
             <Analytics />
@@ -126,6 +244,8 @@ const Dashboard: React.FC = () => {
         </Grid>
       </Grid>
     </Container>
+    <Footer />
+    </Box>
   );
 };
 

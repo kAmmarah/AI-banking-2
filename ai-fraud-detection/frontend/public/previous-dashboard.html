@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Banking - Dashboard</title>
+    <title>Previous AI-Banking Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -40,7 +40,7 @@
             height: auto;
             margin-bottom: 20px;
             filter: drop-shadow(0 0 15px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
-            animation: logoFloat 6s ease-in-out infinite, logoGlow 5s ease-in-out infinite, logoPulse 8s ease-in-out infinite;
+            animation: logoFloat 6s ease-in-out infinite, logoGlow 5s ease-in-out infinite;
             transform-origin: center;
             position: relative;
         }
@@ -72,7 +72,6 @@
             color: #b0b0b0;
             font-size: 1.1em;
         }
-
         .tabs {
             display: flex;
             gap: 10px;
@@ -96,12 +95,6 @@
             gap: 8px;
         }
 
-        .tab-button .icon {
-            width: 18px;
-            height: 18px;
-            display: inline-block;
-        }
-
         .tab-button:hover {
             background: rgba(64, 224, 255, 0.2);
             border-color: #40e0ff;
@@ -113,35 +106,6 @@
             border-color: #40e0ff;
             color: white;
             box-shadow: 0 4px 15px rgba(64, 224, 255, 0.4);
-        }
-
-        .search-box {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #e0e0e0;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #40e0ff;
-            box-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
-        }
-
-        .search-box input::placeholder {
-            color: #888;
         }
 
         .tab-content {
@@ -161,61 +125,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        /* Enhanced Logo animations: float, glow, and pulse effects */
-        @keyframes logoFloat {
-            0% {
-                transform: translateY(0px) scale(1);
-            }
-            25% {
-                transform: translateY(-3px) scale(1.02);
-            }
-            50% {
-                transform: translateY(-8px) scale(1.05);
-            }
-            75% {
-                transform: translateY(-3px) scale(1.02);
-            }
-            100% {
-                transform: translateY(0px) scale(1);
-            }
-        }
-
-        @keyframes logoGlow {
-            0% {
-                filter: drop-shadow(0 0 15px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
-            }
-            25% {
-                filter: drop-shadow(0 0 20px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
-            }
-            50% {
-                filter: drop-shadow(0 0 30px rgba(64, 224, 255, 1)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.8));
-            }
-            75% {
-                filter: drop-shadow(0 0 20px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
-            }
-            100% {
-                filter: drop-shadow(0 0 15px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
-            }
-        }
-        
-        @keyframes logoPulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(64, 224, 255, 0.6);
-            }
-            70% {
-                box-shadow: 0 0 0 20px rgba(64, 224, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(64, 224, 255, 0);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .logo {
-                animation: none;
             }
         }
 
@@ -341,217 +250,102 @@
             border: 1px solid rgba(76, 175, 80, 0.5);
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-        }
-
-        .error {
-            background: rgba(255, 82, 82, 0.2);
-            border: 1px solid rgba(255, 82, 82, 0.4);
-            color: #ff5252;
+        .search-box {
+            margin-bottom: 20px;
             padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        /* Scrollbar styling */
-        .table-container::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        .table-container::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-        }
-
-        .table-container::-webkit-scrollbar-thumb {
-            background: rgba(64, 224, 255, 0.3);
-            border-radius: 10px;
-        }
-
-        .table-container::-webkit-scrollbar-thumb:hover {
-            background: rgba(64, 224, 255, 0.5);
-        }
-
-        /* Floating Chat Icon */
-        .floating-chat-icon {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #40e0ff 0%, #0080ff 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(64, 224, 255, 0.4);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .floating-chat-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(64, 224, 255, 0.6);
-        }
-
-        .floating-chat-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: white;
-        }
-
-        .floating-chat-icon .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 20px;
-            height: 20px;
-            background: #ff5252;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: white;
-            border: 2px solid #0a1929;
-        }
-
-        /* Chatbot styles */
-        .chat-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 500px;
-            backdrop-filter: blur(10px);
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-            margin-bottom: 15px;
-        }
-
-        .chat-message {
-            margin-bottom: 12px;
-            display: flex;
-        }
-
-        .chat-message.user {
-            justify-content: flex-end;
-        }
-
-        .chat-message.bot {
-            justify-content: flex-start;
-        }
-
-        .chat-bubble {
-            max-width: 75%;
-            padding: 10px 14px;
-            border-radius: 16px;
-            line-height: 1.4;
-            font-size: 14px;
-        }
-
-        .chat-message.user .chat-bubble {
-            background: linear-gradient(135deg, #40e0ff 0%, #0080ff 100%);
-            color: #ffffff;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-message.bot .chat-bubble {
-            background: rgba(0, 0, 0, 0.4);
-            color: #e0e0e0;
-            border-bottom-left-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .chat-input-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .chat-input-row input {
-            flex: 1;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
             background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
             color: #e0e0e0;
-            font-size: 14px;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
-        .chat-input-row input:focus {
+        .search-box input:focus {
             outline: none;
             border-color: #40e0ff;
             box-shadow: 0 0 10px rgba(64, 224, 255, 0.3);
         }
 
-        .chat-input-row button {
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(135deg, #40e0ff 0%, #0080ff 100%);
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(64, 224, 255, 0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .chat-input-row button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(64, 224, 255, 0.5);
-        }
-
-        .chat-hint {
-            font-size: 12px;
-            color: #9e9e9e;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .logo {
-                max-width: 200px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chat-container {
-                height: 420px;
-            }
-
-            .floating-chat-icon {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-            }
-
-            .floating-chat-icon svg {
-                width: 24px;
-                height: 24px;
-            }
+        .search-box input::placeholder {
+            color: #888;
         }
         
-        /* Enhanced Chat Icon Styles */
+        /* Logo animations */
+        @keyframes logoFloat {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            25% {
+                transform: translateY(-3px) scale(1.02);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+            75% {
+                transform: translateY(-3px) scale(1.02);
+            }
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+        }
+
+        @keyframes logoGlow {
+            0% {
+                filter: drop-shadow(0 0 15px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+            }
+            25% {
+                filter: drop-shadow(0 0 20px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(64, 224, 255, 1)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.8));
+            }
+            75% {
+                filter: drop-shadow(0 0 20px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.5));
+            }
+            100% {
+                filter: drop-shadow(0 0 15px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+            }
+        }
+        /* Chatbot Styles */
+        .floating-chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #40e0ff 0%, #1e90ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(64, 224, 255, 0.6);
+            border: 2px solid rgba(64, 224, 255, 0.8);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: bounce 3s ease-in-out infinite, pulse 4s ease-in-out infinite;
+        }
+        
+        .floating-chat-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(64, 224, 255, 0.8);
+        }
+        
+        .floating-chat-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: #0f2027;
+        }
+        
         .chat-notification-dot {
             position: absolute;
             top: -2px;
@@ -564,45 +358,53 @@
             animation: notificationPulse 2s infinite;
         }
         
-        @keyframes floatAndGlow {
-            0% {
-                transform: translateY(0) scale(1);
-                filter: drop-shadow(0 0 8px rgba(64, 224, 255, 0.8));
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
             }
-            50% {
-                transform: translateY(-4px) scale(1.05);
-                filter: drop-shadow(0 0 16px rgba(64, 224, 255, 1)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.6));
+            40% {
+                transform: translateY(-8px);
             }
-            100% {
-                transform: translateY(0) scale(1);
-                filter: drop-shadow(0 0 8px rgba(64, 224, 255, 0.8));
+            60% {
+                transform: translateY(-4px);
             }
         }
-        
-        .floating-chat-icon:hover {
-            animation: floatAndGlow 2s ease-in-out infinite;
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(64, 224, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(64, 224, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(64, 224, 255, 0);
+            }
+        }
+
+        @keyframes notificationPulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="logo.png" alt="AI Banking Logo" class="logo">
-            <h1>AI Banking Dashboard</h1>
-            <p class="subtitle">Fraud Detection & Transaction Analytics</p>
-        </div>
 
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('customers', this)">Customers</button>
             <button class="tab-button" onclick="showTab('transactions', this)">Transactions</button>
             <button class="tab-button" onclick="showTab('fraud', this)">Fraud Cases</button>
-            <button class="tab-button" onclick="showTab('assistant', this)">
-                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-                    <path d="M7 9h2v2H7zm4 0h6v2h-6zm-4 4h6v2H7z"/>
-                </svg>
-                AI Assistant
-            </button>
         </div>
 
         <div id="customers-tab" class="tab-content active">
@@ -724,51 +526,8 @@
                 </table>
             </div>
         </div>
-
-        <div id="assistant-tab" class="tab-content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">AI Banking Copilot</div>
-                    <div class="stat-value" style="font-size: 1.6em; display: flex; align-items: center; gap: 10px;">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 8px rgba(64, 224, 255, 0.6));">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            <line x1="9" y1="10" x2="15" y2="10"></line>
-                            <line x1="9" y1="14" x2="13" y2="14"></line>
-                        </svg>
-                        Chat Assistant
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">What you can ask</div>
-                    <div style="font-size: 0.9em; color: #cfd8dc;">
-                        • \"How many customers do I have?\"<br>
-                        • \"Show high risk customers count\"<br>
-                        • \"Total transactions and fraud amount\"<br>
-                        • \"Details for customer 1001\"<br>
-                        • \"How many fraud cases of type Transfer?\"
-                    </div>
-                </div>
-            </div>
-            <div class="chat-container">
-                <div class="chat-hint">
-                    Ask questions about your customers, transactions and fraud cases. The assistant uses the CSV data loaded on this page (no external API calls).
-                </div>
-                <div id="chat-messages" class="chat-messages"></div>
-                <form class="chat-input-row" onsubmit="handleChatSubmit(event)">
-                    <input id="chat-input" type="text" placeholder="Ask the AI assistant about your banking data..." autocomplete="off">
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Chat Icon -->
-    <div class="floating-chat-icon" onclick="showTab('assistant')" title="Open AI Assistant">
-        <svg viewBox="0 0 24 24" fill="white">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-            <path d="M7 9h2v2H7zm4 0h6v2h-6zm-4 4h6v2H7z"/>
-        </svg>
-        <div class="chat-notification-dot"></div>
+        
+        
     </div>
 
     <script>
@@ -954,120 +713,10 @@
             // Show selected tab
             document.getElementById(`${tabName}-tab`).classList.add('active');
             
-            // Add active class to clicked button (if it's a tab button)
-            if (clickedElement && clickedElement.classList.contains('tab-button')) {
+            // Add active class to clicked button
+            if (clickedElement) {
                 clickedElement.classList.add('active');
-            } else {
-                // If called from floating icon, activate the assistant tab button
-                const assistantBtn = document.querySelector('.tab-button[onclick*="assistant"]');
-                if (assistantBtn) {
-                    assistantBtn.classList.add('active');
-                }
             }
-        }
-
-        // Simple rule-based AI assistant that answers questions using the loaded CSV data
-        function addChatMessage(sender, text) {
-            const container = document.getElementById('chat-messages');
-            if (!container) return;
-
-            const wrapper = document.createElement('div');
-            wrapper.className = `chat-message ${sender}`;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble';
-            bubble.textContent = text;
-
-            wrapper.appendChild(bubble);
-            container.appendChild(wrapper);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function answerQuestion(message) {
-            const text = message.toLowerCase();
-
-            // Greeting
-            if (/^(hi|hello|salam|assalam|hey)/.test(text)) {
-                return 'Hello! I am your AI Banking assistant. Ask me about customers, transactions, or fraud statistics from your CSV data.';
-            }
-
-            if (text.includes('how many customers')) {
-                return `You currently have ${customersData.length} customers in the dataset.`;
-            }
-
-            if (text.includes('high risk')) {
-                const high = customersData.filter(c => c.risk_profile === 'High').length;
-                return `There are ${high} high risk customers in your portfolio.`;
-            }
-
-            if (text.includes('medium risk')) {
-                const medium = customersData.filter(c => c.risk_profile === 'Medium').length;
-                return `There are ${medium} medium risk customers.`;
-            }
-
-            if (text.includes('low risk')) {
-                const low = customersData.filter(c => c.risk_profile === 'Low').length;
-                return `There are ${low} low risk customers.`;
-            }
-
-            if (text.includes('total transactions')) {
-                const total = transactionsData.length;
-                const totalAmount = transactionsData.reduce((sum, t) => sum + parseInt(t.amount), 0);
-                return `There are ${total.toLocaleString()} total transactions with a combined amount of ${formatCurrency(totalAmount)}.`;
-            }
-
-            if (text.includes('fraud amount') || text.includes('fraud value')) {
-                const fraudOnly = transactionsData.filter(t => t.is_fraud === '1');
-                const totalFraudAmount = fraudOnly.reduce((sum, t) => sum + parseInt(t.amount), 0);
-                return `Detected ${fraudOnly.length} fraudulent transactions with a total value of ${formatCurrency(totalFraudAmount)}.`;
-            }
-
-            if (text.includes('fraud cases')) {
-                return `There are ${fraudData.length} confirmed fraud cases in the fraud_cases.csv file.`;
-            }
-
-            // Questions about a specific customer ID
-            const idMatch = text.match(/customer\\s*(id)?\\s*(\\d{3,4})/);
-            if (idMatch) {
-                const id = idMatch[2];
-                const customer = customersData.find(c => c.customer_id === id);
-                if (customer) {
-                    const customerTx = transactionsData.filter(t => t.customer_id === id);
-                    const fraudTx = customerTx.filter(t => t.is_fraud === '1');
-                    const totalAmount = customerTx.reduce((sum, t) => sum + parseInt(t.amount), 0);
-                    return `Customer ${customer.name} (ID ${customer.customer_id}) from ${customer.city} has a ${customer.risk_profile} risk profile and ${customerTx.length} transactions totalling ${formatCurrency(totalAmount)}. Fraudulent transactions for this customer: ${fraudTx.length}.`;
-                }
-                return `I could not find details for customer ID ${id} in the dataset.`;
-            }
-
-            // Fraud cases by transaction type
-            const types = ['ATM', 'POS', 'Online', 'Transfer'];
-            for (const type of types) {
-                if (text.includes(type.toLowerCase())) {
-                    const typeCases = fraudData.filter(f => f.transaction_type.toLowerCase() === type.toLowerCase());
-                    if (typeCases.length > 0) {
-                        const amount = typeCases.reduce((sum, f) => sum + parseInt(f.amount), 0);
-                        return `There are ${typeCases.length} fraud cases of type ${type} with a total value of ${formatCurrency(amount)}.`;
-                    }
-                }
-            }
-
-            return 'I am a lightweight assistant that uses only the CSV data loaded on this page. You can ask things like:\n- \"How many customers do I have?\"\n- \"Show high risk customers count\"\n- \"Total transactions and fraud amount\"\n- \"Details for customer 1001\"';
-        }
-
-        function handleChatSubmit(event) {
-            event.preventDefault();
-            const input = document.getElementById('chat-input');
-            if (!input || !input.value.trim()) return;
-
-            const message = input.value.trim();
-            addChatMessage('user', message);
-            input.value = '';
-
-            // Generate answer
-            const reply = answerQuestion(message);
-            // Small delay for more natural feel
-            setTimeout(() => addChatMessage('bot', reply), 200);
         }
 
         // Initialize
@@ -1081,13 +730,19 @@
             displayCustomers(customersData);
             displayTransactions(transactionsData);
             displayFraud(fraudData);
-
-            // Seed chatbot with a welcome message once data is ready
-            addChatMessage('bot', 'Welcome to the AI Banking assistant. Your CSV data is loaded — ask me about customers, transactions, or fraud cases.');
         }
 
         // Start the app
         init();
     </script>
+    <!-- Floating Chat Icon -->
+    <div class="floating-chat-icon" onclick="showTab('assistant')" title="Open AI Assistant">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            <path d="M7 9h2v2H7zm4 0h6v2h-6zm-4 4h6v2H7z"/>
+        </svg>
+        <div class="chat-notification-dot"></div>
+    </div>
+
 </body>
 </html>

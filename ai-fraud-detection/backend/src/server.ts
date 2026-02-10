@@ -27,6 +27,37 @@ webSocketService.initialize(server);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/fraud', fraudDetectionRoutes);
 
+// Simple AI chatbot endpoint (rule-based placeholder)
+app.post('/api/chat', (req: Request, res: Response) => {
+  const { message } = (req.body ?? {}) as { message?: unknown };
+
+  if (typeof message !== 'string') {
+    return res.status(400).json({
+      error: 'Invalid request: "message" must be a string.',
+    });
+  }
+
+  const text = message.toLowerCase();
+
+  let reply =
+    'I am your AI fraud assistant. I can help explain risk scores, alerts, and transactions in this dashboard.';
+
+  if (text.includes('risk') || text.includes('score')) {
+    reply =
+      'Risk scores summarize how likely a transaction is to be fraudulent. Higher scores (above 70%) should be reviewed first.';
+  } else if (text.includes('fraud') || text.includes('alert')) {
+    reply =
+      'Fraud alerts are generated when unusual patterns are detected, such as high-value payments in new locations or rapid consecutive transactions.';
+  } else if (text.includes('transaction') || text.includes('customer')) {
+    reply =
+      'You can inspect individual customers and transactions on the dashboard pages. Use filters and risk labels to prioritize investigations.';
+  } else if (text.includes('hello') || text.includes('hi')) {
+    reply = 'Hello! How can I help you understand your fraud detection data today?';
+  }
+
+  res.status(200).json({ reply });
+});
+
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ 
@@ -57,7 +88,7 @@ app.use((err: Error, req: Request, res: Response, next: any) => {
 });
 
 // 404 handler
-app.use('*', (req: Request, res: Response) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
