@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
+import {
+  Box,
   Typography,
   Grid,
   Paper,
   CircularProgress
 } from '@mui/material';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
   ResponsiveContainer,
   PieChart,
   Pie,
@@ -42,14 +42,7 @@ interface AnalysisData {
   value: number;
 }
 
-interface CustomerData {
-  customer_id: string;
-  name: string;
-  age: string;
-  account_type: string;
-  city: string;
-  risk_profile: string;
-}
+
 
 interface TransactionRecord {
   transaction_id: string;
@@ -137,7 +130,7 @@ export const Analytics: React.FC = () => {
         const processTransactionData = (transactions: TransactionRecord[], fraudCases: FraudCase[]) => {
           // Group by transaction type for bar chart
           const typeCounts: Record<string, { safe: number; fraudulent: number }> = {};
-          
+
           transactions.forEach(transaction => {
             const type = transaction.transaction_type;
             if (!typeCounts[type]) {
@@ -165,7 +158,7 @@ export const Analytics: React.FC = () => {
           const totalTransactions = transactions.length;
           const fraudulentCount = fraudCases.length;
           const safeCount = totalTransactions - fraudulentCount;
-          
+
           const analysisData = [
             { name: 'Safe', value: Math.round((safeCount / totalTransactions) * 100) },
             { name: 'Partial Critical', value: 10 }, // Fixed percentage
@@ -214,10 +207,10 @@ export const Analytics: React.FC = () => {
   console.log('Rendering Analytics component', { transactionData, transactionAnalysis });
   return (
     <Box sx={{ width: '100%', height: 400 }}>
-      <Typography 
-        variant="h6" 
+      <Typography
+        variant="h6"
         gutterBottom
-        sx={{ 
+        sx={{
           color: '#40e0ff',
           fontWeight: 'bold',
           mb: 2,
@@ -247,24 +240,24 @@ export const Analytics: React.FC = () => {
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.2)" />
-                <XAxis 
-                  dataKey="name" 
+                <XAxis
+                  dataKey="name"
                   stroke="#b0b0b0"
                   tick={{ fill: '#e0e0e0' }}
                 />
-                <YAxis 
+                <YAxis
                   stroke="#b0b0b0"
                   tick={{ fill: '#e0e0e0' }}
                 />
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     backgroundColor: 'rgba(15, 32, 39, 0.9)',
                     border: '1px solid rgba(64, 224, 255, 0.3)',
                     borderRadius: '8px',
                     color: '#e0e0e0'
                   }}
                 />
-                <Legend 
+                <Legend
                   wrapperStyle={{ color: '#e0e0e0' }}
                 />
                 <Bar dataKey="safe" fill="#4ECDC4" name="Safe Transactions" />
@@ -292,13 +285,13 @@ export const Analytics: React.FC = () => {
                     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
                     const x = cx + radius * Math.cos(-safeMidAngle * Math.PI / 180);
                     const y = cy + radius * Math.sin(-safeMidAngle * Math.PI / 180);
-                    
+
                     return (
-                      <text 
-                        x={x} 
-                        y={y} 
-                        fill="white" 
-                        textAnchor={x > cx ? 'start' : 'end'} 
+                      <text
+                        x={x}
+                        y={y}
+                        fill="white"
+                        textAnchor={x > cx ? 'start' : 'end'}
                         dominantBaseline="central"
                         fontSize="12"
                         fontWeight="bold"
@@ -312,8 +305,8 @@ export const Analytics: React.FC = () => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     backgroundColor: 'rgba(15, 32, 39, 0.9)',
                     border: '1px solid rgba(64, 224, 255, 0.3)',
                     borderRadius: '8px',

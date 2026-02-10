@@ -49,3 +49,4 @@ customer_id,name,age,account_type,city,risk_profile
 1048,Customer_47,22,Current,Islamabad,High
 1049,Customer_48,40,Current,Islamabad,Medium
 1050,Customer_49,48,Savings,Karachi,High
+

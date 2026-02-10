@@ -99,3 +99,4 @@ transaction_id,customer_id,amount,transaction_type,is_fraud
 5098,1016,183457,ATM,1
 5099,1003,37131,ATM,0
 5100,1020,73491,Transfer,0
+

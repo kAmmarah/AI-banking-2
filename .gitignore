@@ -7,3 +7,5 @@ ai-fraud-detection/frontend/node_modules/
 ai-fraud-detection/backend/node_modules/
 ai-fraud-detection/temp-frontend/node_modules/
 
+
+.env

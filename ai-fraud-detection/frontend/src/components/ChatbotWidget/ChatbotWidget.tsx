@@ -8,10 +8,13 @@ import {
   InputAdornment,
   Fade,
   CircularProgress,
+  Badge,
+  Tooltip,
 } from '@mui/material';
-import ChatIcon from '@mui/icons-material/Chat';
+// import ChatIcon from '@mui/icons-material/Chat'; // Removed as it's not used since we switched to SmartToyIcon
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 type MessageRole = 'user' | 'assistant';
 
@@ -25,11 +28,13 @@ const ChatbotWidget: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      content: '👋 Welcome to AI Banking! I\'m your intelligent assistant. I can help you with fraud detection insights, transaction analysis, risk assessment, and dashboard navigation. Try asking: "Show me recent fraud cases" or "What\'s the total transaction volume?"',
+      content:
+        'Hi! I am your AI fraud assistant. Ask me about suspicious transactions, risk scores, or how this dashboard works.',
     },
   ]);
 
@@ -48,6 +53,18 @@ const ChatbotWidget: React.FC = () => {
 
   const handleToggle = () => {
     setOpen((prev) => !prev);
+  };
+
+  const handleClearHistory = () => {
+    // Reset to initial state but keep the welcome message
+    setMessages([
+      {
+        id: 'welcome',
+        role: 'assistant',
+        content:
+          'Hi! I am your AI fraud assistant. Ask me about suspicious transactions, risk scores, or how this dashboard works.',
+      },
+    ]);
   };
 
   const handleSend = async () => {
@@ -104,34 +121,108 @@ const ChatbotWidget: React.FC = () => {
       event.preventDefault();
       handleSend();
     }
+    // Close chat with Escape key
+    if (event.key === 'Escape' && open) {
+      event.preventDefault();
+      setOpen(false);
+    }
   };
+
+  // Keyboard shortcut for opening chat
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === '/') {
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // Reset unread count when chat is opened
+  useEffect(() => {
+    if (open) {
+      setUnreadCount(0);
+    }
+  }, [open]);
 
   return (
     <>
-      <IconButton
-        aria-label="Open AI chatbot"
-        onClick={handleToggle}
-        sx={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          zIndex: 1500,
-          width: 56,
-          height: 56,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #40e0ff 0%, #1e90ff 100%)',
-          boxShadow: '0 8px 24px rgba(64, 224, 255, 0.6)',
-          border: '1px solid rgba(64, 224, 255, 0.8)',
-          color: '#0f2027',
-          '&:hover': {
-            background: 'linear-gradient(135deg, #1e90ff 0%, #40e0ff 100%)',
-            transform: 'translateY(-2px)',
-            boxShadow: '0 10px 30px rgba(64, 224, 255, 0.8)',
-          },
-        }}
-      >
-        <ChatIcon />
-      </IconButton>
+      <Tooltip title="AI Fraud Assistant" placement="left">
+        <Badge
+          badgeContent={unreadCount > 0 ? unreadCount : null}
+          color="primary"
+          sx={{
+            position: 'fixed',
+            bottom: 24,
+            right: 24,
+            zIndex: 1500,
+            '& .MuiBadge-badge': {
+              animation: 'pulse 2s infinite',
+              '@keyframes pulse': {
+                '0%': {
+                  transform: 'scale(0.95)',
+                  boxShadow: '0 0 0 0 rgba(64, 224, 255, 0.7)',
+                },
+                '70%': {
+                  transform: 'scale(1)',
+                  boxShadow: '0 0 0 10px rgba(64, 224, 255, 0)',
+                },
+                '100%': {
+                  transform: 'scale(0.95)',
+                  boxShadow: '0 0 0 0 rgba(64, 224, 255, 0)',
+                },
+              },
+            },
+          }}
+        >
+          <IconButton
+            aria-label="Open AI chatbot"
+            onClick={handleToggle}
+            sx={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #40e0ff 0%, #1e90ff 100%)',
+              boxShadow: '0 8px 24px rgba(64, 224, 255, 0.6)',
+              border: '2px solid rgba(64, 224, 255, 0.8)',
+              color: '#0f2027',
+              position: 'relative',
+              overflow: 'hidden',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: '-50%',
+                left: '-50%',
+                width: '200%',
+                height: '200%',
+                background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent)',
+                animation: 'rotate 3s linear infinite',
+                '@keyframes rotate': {
+                  '0%': { transform: 'rotate(0deg)' },
+                  '100%': { transform: 'rotate(360deg)' },
+                },
+              },
+              '&:hover': {
+                background: 'linear-gradient(135deg, #1e90ff 0%, #40e0ff 100%)',
+                transform: 'translateY(-4px) scale(1.05)',
+                boxShadow: '0 12px 35px rgba(64, 224, 255, 0.9)',
+              },
+              '& .MuiSvgIcon-root': {
+                position: 'relative',
+                zIndex: 1,
+                fontSize: '28px',
+              },
+            }}
+          >
+            <SmartToyIcon />
+          </IconButton>
+        </Badge>
+      </Tooltip>
 
       <Fade in={open} unmountOnExit>
         <Box
@@ -168,18 +259,49 @@ const ChatbotWidget: React.FC = () => {
                 background: 'rgba(10, 25, 41, 0.95)',
               }}
             >
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: 'bold',
-                  background: 'linear-gradient(135deg, #40e0ff 0%, #ffffff 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                AI Fraud Assistant
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <SmartToyIcon sx={{ color: '#40e0ff', fontSize: '20px' }} />
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: 'bold',
+                    background: 'linear-gradient(135deg, #40e0ff 0%, #ffffff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  AI Fraud Assistant
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: 'rgba(224, 224, 224, 0.7)',
+                    fontStyle: 'italic'
+                  }}
+                >
+                  Ctrl+/ to open
+                </Typography>
+                <IconButton
+                  size="small"
+                  onClick={handleClearHistory}
+                  sx={{
+                    color: '#b0b0b0',
+                    '&:hover': { color: '#ffffff' },
+                    p: 0.5
+                  }}
+                  title="Clear chat history"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </IconButton>
+              </Box>
               <IconButton
                 size="small"
                 onClick={handleToggle}

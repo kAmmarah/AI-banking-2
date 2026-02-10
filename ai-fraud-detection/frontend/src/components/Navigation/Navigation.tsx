@@ -1,13 +1,12 @@
 import React from 'react';
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
   Box,
   Avatar
 } from '@mui/material';
-import { keyframes } from '@mui/system';
 import { Link, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
@@ -17,39 +16,6 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import HistoryIcon from '@mui/icons-material/History';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import PieChartIcon from '@mui/icons-material/PieChart';
-
-const logoFloat = keyframes`
-  0% {
-    transform: translateY(0) scale(1);
-    filter: drop-shadow(0 0 4px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 8px rgba(64, 224, 255, 0.3));
-  }
-  25% {
-    filter: drop-shadow(0 0 6px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
-  }
-  50% {
-    transform: translateY(-3px) scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(64, 224, 255, 1)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
-  }
-  75% {
-    filter: drop-shadow(0 0 6px rgba(64, 224, 255, 0.9)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    filter: drop-shadow(0 0 4px rgba(64, 224, 255, 0.7)) drop-shadow(0 0 8px rgba(64, 224, 255, 0.3));
-  }
-`;
-
-const logoPulse = keyframes`
-  0% {
-    box-shadow: 0 0 0 0 rgba(64, 224, 255, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(64, 224, 255, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(64, 224, 255, 0);
-  }
-`;
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -62,91 +28,115 @@ const Navigation: React.FC = () => {
     { path: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
     { path: '/pie-chart', label: 'Risk Pie Chart', icon: <PieChartIcon /> },
     { path: '/enhanced-dashboard', label: 'Enhanced Dashboard', icon: <AutoGraphIcon /> },
-    { path: '/previous-dashboard', label: 'Data AI Banking', icon: <HistoryIcon /> },
+    { path: '/previous-dashboard', label: 'AI Data', icon: <HistoryIcon /> },
   ];
 
   return (
-    <AppBar 
-      position="static" 
-      sx={{ 
+    <AppBar
+      position="static"
+      sx={{
         mb: 4,
-        background: 'linear-gradient(135deg, rgba(15, 32, 39, 0.95) 0%, rgba(32, 58, 67, 0.95) 100%)',
-        backdropFilter: 'blur(10px)',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-        border: '1px solid rgba(64, 224, 255, 0.2)',
-        borderRadius: '0 0 20px 20px'
+        background: 'transparent',
+        boxShadow: 'none',
+        pt: 2
       }}
     >
-      <Toolbar>
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-          <Avatar
-            src="/logo.png"
-            alt="AI Banking Logo"
+      <Toolbar
+        sx={{
+          background: 'rgba(15, 23, 42, 0.95)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '50px',
+          border: '1px solid rgba(64, 224, 255, 0.2)',
+          px: '24px !important',
+          minHeight: '70px !important',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap', // Allow wrapping if needed on small screens
+          gap: 1
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            className="animated-logo-container"
             sx={{
-              width: 40,
-              height: 40,
-              mr: 1,
+              width: 44,
+              height: 44,
+              mr: 2,
               borderRadius: '12px',
               border: '2px solid rgba(64, 224, 255, 0.9)',
-              boxShadow: '0 0 12px rgba(64, 224, 255, 0.7)',
-              animation: `${logoFloat} 6s ease-in-out infinite, ${logoPulse} 8s ease-in-out infinite`,
-              backgroundColor: 'rgba(10, 25, 41, 0.9)',
+              boxShadow: '0 0 15px rgba(64, 224, 255, 0.5)',
+              background: 'conic-gradient(from 0deg, #40e0ff, #1e90ff, #70e6ff, #40e0ff)',
+              backgroundSize: '400% 400%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               position: 'relative',
+              overflow: 'hidden',
               '&::before': {
                 content: '""',
                 position: 'absolute',
-                top: '-2px',
-                left: '-2px',
-                right: '-2px',
-                bottom: '-2px',
-                borderRadius: '12px',
-                background: 'linear-gradient(45deg, #40e0ff, #ffffff, #40e0ff)',
-                zIndex: -1,
-                animation: `${logoFloat} 6s ease-in-out infinite reverse`,
-                opacity: 0.3,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: '10px',
+                background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent)',
+                animation: 'logoGlowAnimation 6s linear infinite',
+                zIndex: 1,
               }
             }}
-          />
-          <Typography 
-            variant="h6" 
-            component="div" 
-            sx={{ 
-              fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #40e0ff 0%, #ffffff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}
           >
-            AI Fraud Detection System
-          </Typography>
+            <Avatar
+              src="/logo.png"
+              alt="AI Banking Logo"
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: '10px',
+                backgroundColor: 'rgba(10, 25, 41, 0.7)',
+                zIndex: 2,
+                border: '1px solid rgba(255,255,255,0.2)',
+              }}
+            />
+          </Box>
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#fff', lineHeight: 1.2 }}>
+              AI Fraud Detection
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#40e0ff', letterSpacing: 1 }}>
+              System
+            </Typography>
+          </Box>
         </Box>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+
+        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', justifyContent: 'center' }}>
           {navItems.map((item) => (
             <Button
               key={item.path}
               component={Link}
               to={item.path}
-              variant={location.pathname === item.path ? "contained" : "outlined"}
               startIcon={item.icon}
-              sx={{ 
-                borderRadius: '20px',
+              sx={{
+                borderRadius: '25px',
                 textTransform: 'none',
                 fontWeight: 'bold',
-                backgroundColor: location.pathname === item.path 
-                  ? 'linear-gradient(135deg, #40e0ff 0%, #1e90ff 100%)' 
+                px: 2,
+                py: 1,
+                fontSize: '0.85rem',
+                backgroundColor: location.pathname === item.path
+                  ? '#40e0ff'
                   : 'transparent',
-                borderColor: 'rgba(64, 224, 255, 0.5)',
-                color: location.pathname === item.path ? '#0f2027' : '#40e0ff',
-                transition: 'all 0.3s ease',
+                color: location.pathname === item.path ? '#000' : 'rgba(64, 224, 255, 0.7)',
+                border: location.pathname === item.path
+                  ? 'none'
+                  : '1px solid rgba(64, 224, 255, 0.3)',
                 '&:hover': {
-                  backgroundColor: location.pathname === item.path 
-                    ? 'linear-gradient(135deg, #1e90ff 0%, #40e0ff 100%)' 
+                  backgroundColor: location.pathname === item.path
+                    ? '#70e6ff'
                     : 'rgba(64, 224, 255, 0.1)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 5px 15px rgba(64, 224, 255, 0.4)',
-                  borderColor: '#40e0ff'
-                }
+                  borderColor: '#40e0ff',
+                  transform: 'translateY(-1px)'
+                },
+                transition: 'all 0.2s ease'
               }}
             >
               {item.label}

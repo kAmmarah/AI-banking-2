@@ -27,8 +27,14 @@ webSocketService.initialize(server);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/fraud', fraudDetectionRoutes);
 
-// Simple AI chatbot endpoint (rule-based placeholder)
-app.post('/api/chat', (req: Request, res: Response) => {
+// Google Generative AI
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+// Initialize Gemini API
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+
+// Simple AI chatbot endpoint (Gemini Integration)
+app.post('/api/chat', async (req: Request, res: Response) => {
   const { message } = (req.body ?? {}) as { message?: unknown };
 
   if (typeof message !== 'string') {
@@ -37,31 +43,44 @@ app.post('/api/chat', (req: Request, res: Response) => {
     });
   }
 
-  const text = message.toLowerCase();
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
-  let reply =
-    'I am your AI fraud assistant. I can help explain risk scores, alerts, and transactions in this dashboard.';
+    // Provide context to the AI about its role
+    const prompt = `
+      You are an expert AI Fraud Detection Assistant for a banking dashboard.
+      Your role is to help users understand fraud risks, analyze transaction patterns, and explain dashboard features.
+      
+      Dashboard Context:
+      - Total Transactions: 12,500
+      - Flagged Transactions: 32
+      - Confirmed Fraud: 8
+      - Prevented Losses: $45,600
+      - Features: Transaction Feed, Fraud Analysis Charts, Risk Scoring, Customer Profiles.
+      
+      User Question: ${message}
+      
+      Please provide a helpful, professional, and concise response related to banking fraud detection.
+    `;
 
-  if (text.includes('risk') || text.includes('score')) {
-    reply =
-      'Risk scores summarize how likely a transaction is to be fraudulent. Higher scores (above 70%) should be reviewed first.';
-  } else if (text.includes('fraud') || text.includes('alert')) {
-    reply =
-      'Fraud alerts are generated when unusual patterns are detected, such as high-value payments in new locations or rapid consecutive transactions.';
-  } else if (text.includes('transaction') || text.includes('customer')) {
-    reply =
-      'You can inspect individual customers and transactions on the dashboard pages. Use filters and risk labels to prioritize investigations.';
-  } else if (text.includes('hello') || text.includes('hi')) {
-    reply = 'Hello! How can I help you understand your fraud detection data today?';
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    res.status(200).json({ reply: text });
+  } catch (error) {
+    console.error('Gemini API Error:', error);
+    res.status(500).json({
+      reply: 'I apologize, but I am having trouble connecting to the AI service at the moment.',
+      error: 'Failed to generate response'
+    });
   }
-
-  res.status(200).json({ reply });
 });
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
-  res.status(200).json({ 
-    status: 'OK', 
+  res.status(200).json({
+    status: 'OK',
     message: 'Server is running',
     webSocketClients: webSocketService.getConnectedClientsCount()
   });
@@ -69,7 +88,7 @@ app.get('/health', (req: Request, res: Response) => {
 
 // Root endpoint
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ 
+  res.status(200).json({
     message: 'AI-Powered Fraud Detection System API',
     version: '1.0.0',
     endpoints: {

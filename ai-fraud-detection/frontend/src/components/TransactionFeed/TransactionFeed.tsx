@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper, 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
   Chip,
   Box,
   Typography
@@ -14,11 +14,9 @@ import {
 import { styled } from '@mui/material/styles';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '10px',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+  background: 'transparent', // Using transparent here as it's inside the Dashboard's StyledPaper
+  boxShadow: 'none',
+  borderRadius: '0',
 }));
 
 interface Transaction {
@@ -36,7 +34,7 @@ interface Transaction {
 
 export const TransactionFeed: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  
+
   useEffect(() => {
     // In a real app, fetch from the backend
     // For now, using mock data
@@ -103,20 +101,10 @@ export const TransactionFeed: React.FC = () => {
       }
     ]);
   }, []);
-  
+
   return (
     <Box>
-      <Typography 
-        variant="h6" 
-        gutterBottom
-        sx={{ 
-          color: '#40e0ff',
-          fontWeight: 'bold',
-          mb: 2
-        }}
-      >
-        Live Transaction Feed
-      </Typography>
+
       <TableContainer component={StyledPaper}>
         <Table size="small">
           <TableHead>
@@ -132,15 +120,16 @@ export const TransactionFeed: React.FC = () => {
           </TableHead>
           <TableBody>
             {transactions.map((transaction) => (
-              <TableRow 
+              <TableRow
                 key={transaction.id}
-                sx={{ 
-                  '&:hover': { 
-                    backgroundColor: 'rgba(64, 224, 255, 0.1)' 
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'rgba(64, 224, 255, 0.05)'
                   },
                   '&:nth-of-type(odd)': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                  }
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  },
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
                 }}
               >
                 <TableCell sx={{ color: '#e0e0e0' }}>{transaction.id}</TableCell>
@@ -148,26 +137,26 @@ export const TransactionFeed: React.FC = () => {
                 <TableCell sx={{ color: '#e0e0e0' }}>{transaction.location}</TableCell>
                 <TableCell sx={{ color: '#e0e0e0' }} align="right">${transaction.amount.toFixed(2)}</TableCell>
                 <TableCell>
-                  <Chip 
-                    label={transaction.status} 
+                  <Chip
+                    label={transaction.status}
                     size="small"
                     sx={{
-                      backgroundColor: 
+                      backgroundColor:
                         transaction.status === 'completed' ? '#4ECDC4' :
-                        transaction.status === 'pending' ? '#FFD700' : '#FF6B6B',
+                          transaction.status === 'pending' ? '#FFD700' : '#FF6B6B',
                       color: 'white',
                       fontWeight: 'bold'
                     }}
                   />
                 </TableCell>
                 <TableCell>
-                  <Chip 
-                    label={`${(transaction.riskScore * 100).toFixed(0)}%`} 
+                  <Chip
+                    label={`${(transaction.riskScore * 100).toFixed(0)}%`}
                     size="small"
                     sx={{
-                      backgroundColor: 
+                      backgroundColor:
                         transaction.riskScore > 0.7 ? '#FF6B6B' :
-                        transaction.riskScore > 0.3 ? '#FFD700' : '#4ECDC4',
+                          transaction.riskScore > 0.3 ? '#FFD700' : '#4ECDC4',
                       color: transaction.riskScore > 0.3 && transaction.riskScore <= 0.7 ? '#333' : 'white',
                       fontWeight: 'bold'
                     }}
@@ -175,16 +164,16 @@ export const TransactionFeed: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   {transaction.isFraud && (
-                    <Chip 
-                      label="FRAUD" 
-                      size="small" 
+                    <Chip
+                      label="FRAUD"
+                      size="small"
                       sx={{
                         backgroundColor: '#FF6B6B',
                         color: 'white',
                         fontWeight: 'bold',
                         border: '1px solid #FF6B6B'
                       }}
-                      variant="outlined" 
+                      variant="outlined"
                     />
                   )}
                 </TableCell>
