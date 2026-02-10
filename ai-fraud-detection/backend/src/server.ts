@@ -19,9 +19,9 @@ app.use(cors()); // Enable CORS
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize WebSocket service
-const webSocketService = WebSocketService.getInstance();
-webSocketService.initialize(server);
+// Initialize WebSocket service lazily or within the server start block
+// const webSocketService = WebSocketService.getInstance();
+// webSocketService.initialize(server);
 
 // Routes
 app.use('/api/transactions', transactionRoutes);
@@ -113,6 +113,10 @@ app.use((req: Request, res: Response) => {
 
 // Only start the server if running directly (not when imported by Vercel)
 if (require.main === module) {
+  // Initialize WebSocket service only when running locally
+  const webSocketService = WebSocketService.getInstance();
+  webSocketService.initialize(server);
+
   server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`Health check available at http://localhost:${PORT}/health`);

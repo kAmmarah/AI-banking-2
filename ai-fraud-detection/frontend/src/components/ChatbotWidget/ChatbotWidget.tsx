@@ -91,7 +91,8 @@ const ChatbotWidget: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response from chatbot');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.reply || errorData.error || `Server Error: ${response.status}`);
       }
 
       const data = await response.json();
@@ -102,13 +103,12 @@ const ChatbotWidget: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       const errorMessage: ChatMessage = {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content:
-          'Sorry, I could not reach the AI service right now. Please check that the backend server is running.',
+        content: error.message || 'Sorry, I could not reach the AI service right now.',
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
