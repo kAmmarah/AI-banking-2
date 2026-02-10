@@ -8,8 +8,7 @@ import {
   TableRow,
   Paper,
   Chip,
-  Box,
-  Typography
+  Box
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 

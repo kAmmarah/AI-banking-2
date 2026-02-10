@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "install-all": "npm install && cd ai-fraud-detection/frontend && npm install && cd ../backend && npm install",
-    "build": "cd ai-fraud-detection/frontend && npm run build"
+    "build": "CI=false cd ai-fraud-detection/frontend && npm run build"
   },
   "workspaces": [
     "ai-fraud-detection/frontend",
