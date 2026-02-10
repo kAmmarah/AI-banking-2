@@ -1,12 +1,16 @@
 {
-  "name": "ai-banking-dashboard",
+  "name": "ai-banking-root",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd ai-fraud-detection/frontend && npm run build",
-    "start": "cd ai-fraud-detection/frontend && npm start"
+    "install-all": "npm install && cd ai-fraud-detection/frontend && npm install && cd ../backend && npm install",
+    "build": "cd ai-fraud-detection/frontend && npm run build"
   },
+  "workspaces": [
+    "ai-fraud-detection/frontend",
+    "ai-fraud-detection/backend"
+  ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.x"
   }
 }
