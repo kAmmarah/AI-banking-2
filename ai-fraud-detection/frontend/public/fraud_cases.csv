@@ -8,4 +8,3 @@ transaction_id,customer_id,amount,transaction_type,is_fraud
 5073,1028,178774,Transfer,1
 5076,1023,34328,POS,1
 5098,1016,183457,ATM,1
-

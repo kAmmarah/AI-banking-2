@@ -1,0 +1,12 @@
+{
+  "name": "ai-banking-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd ai-fraud-detection/frontend && npm run build",
+    "start": "cd ai-fraud-detection/frontend && npm start"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

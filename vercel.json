@@ -1,0 +1,17 @@
+{
+  "builds": [
+    {
+      "src": "ai-fraud-detection/frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/ai-fraud-detection/frontend/build/$1"
+    }
+  ]
+}
