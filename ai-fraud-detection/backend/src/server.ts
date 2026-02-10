@@ -111,10 +111,13 @@ app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Health check available at http://localhost:${PORT}/health`);
-  console.log(`WebSocket server initialized`);
-});
+// Only start the server if running directly (not when imported by Vercel)
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Health check available at http://localhost:${PORT}/health`);
+    console.log(`WebSocket server initialized`);
+  });
+}
 
 export { app, server, webSocketService };
